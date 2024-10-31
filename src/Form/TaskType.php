@@ -4,11 +4,11 @@ namespace App\Form;
 
 
 use App\Entity\Task;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Event\PreSubmitEvent;
+use Symfonycasts\DynamicForms\DependentField;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfonycasts\DynamicForms\DynamicFormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,9 +19,11 @@ class TaskType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $builder = new DynamicFormBuilder($builder);
         $builder
             ->add('name', TextType::class, [
                 "required" => false,
+
             ])
             ->add('addCategory', CheckboxType::class, [
                 'label' => 'Ajouter une Categorie ?',
@@ -32,19 +34,18 @@ class TaskType extends AbstractType
                     'class' => 'form-check-input',
                 ],
             ])
-            ->addEventListener(FormEvents::PRE_SUBMIT, function (PreSubmitEvent $event): void {
-                $formData = $event->getData(); // Récupère les données du formulaire
-                $form = $event->getForm();
-
-                if (isset($formData['addCategory']) && $formData['addCategory'] == "1") {
-                    $form
-                        ->add('category', CategoryType::class, [
-                            'label' => false,
-                            'attr' => [],
-                        ]);
+            ->addDependent('category', 'addCategory', function (DependentField $field, ?string $choice) {
+                if (empty($choice)) {
+                    return;
                 }
+
+                $field
+                    ->add(CategoryType::class, [
+                        'label' => false,
+                        'attr' => [],
+                    ]);
             })
-            ->add("save", SubmitType::class)
+              
         ;
     }
 

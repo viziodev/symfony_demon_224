@@ -1,0 +1,19 @@
+//asset_mapper
+ //bootstrap 
+    php bin/console importmap:require bootstrap
+    assets/app.js 
+       import 'bootstrap/dist/css/bootstrap.min.css';
+
+/templates/base.html.twig 
+    {% block importmap %}{{ importmap('app') }}{% endblock %}   
+
+//Installation
+ composer require symfony/asset-mapper symfony/stimulus-bundle
+  composer require symfony/ux-live-component [composer require symfony/ux-twig-component] 
+ composer require symfonycasts/dynamic-forms           
+
+
+
+php bin/console asset-map:compile
+
+
