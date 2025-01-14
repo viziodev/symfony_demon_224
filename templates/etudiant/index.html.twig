@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+      <div class="container mt-5">
+            <div class="card">
+                <div class="card-header">Liste des Etudiants de la classe {{classe.nom}}</div>
+                <div class="card-body">
+                        <div class="table-responsive">
+            <table
+                class="table  mt-2 table-bordered table-striped"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                       <th scope="col">Matricule</th>
+                        <th scope="col">Nom & Pernom</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for etudiant in classe.etudiants %}
+                    <tr class="">
+                        <td scope="row">{{etudiant.id}}</td>
+                            <td>{{etudiant.matricule}}</td>
+                        <td>{{etudiant.nomComplet}}</td>
+                        <td>
+                           <a
+                            name=""
+                            id=""
+                            class="btn btn-outline-dark"
+                            href="#"
+                            role="button"
+                            >Details</a
+                           >
+                           
+                        </td>
+                    </tr>
+                 {% endfor %}   
+                </tbody>
+            </table>
+          </div>
+                </div>
+               
+            </div>
+            
+          
+      </div>
+      
+{% endblock %}
+
+
+
