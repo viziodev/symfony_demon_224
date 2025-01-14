@@ -76,7 +76,7 @@
                     </a>
                   </li>
                    {% for page in 1..nbrePage %}
-                      <li class="page-item  {{page==pageActive ? 'active' : ''}}"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                      <li class="page-item  {{page==pageActive ? 'active' : ''}}"><a class="page-link" href="?page={{page}}&search={{search}}">{{page}}</a></li>
                    {% endfor %}
                   <li class="page-item">
                     <a class="page-link" href="#" aria-label="Next">

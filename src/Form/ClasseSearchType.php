@@ -19,10 +19,14 @@ class ClasseSearchType extends AbstractType
         ->add('filiere', EntityType::class, [
             'class' => Filiere::class,
             'choice_label' => 'nom',
+            "placeholder" =>"All",
+            "required" => false
         ])
         ->add('niveau', EntityType::class, [
             'class' => Niveau::class,
             'choice_label' => 'nom',
+            "placeholder" =>"All",
+            "required" => false
         ])
         ->add('add',SubmitType::class,[
             "label" => "Search",
@@ -37,6 +41,8 @@ class ClasseSearchType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ClasseSearchDto::class,
+            'method' => 'GET',
+            'csrf_protection' => false
         ]);
     }
 }

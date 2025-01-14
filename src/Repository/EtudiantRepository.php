@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Etudiant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,20 +17,22 @@ class EtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, Etudiant::class);
     }
 
-    //    /**
-    //     * @return Etudiant[] Returns an array of Etudiant objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Paginator Returns an array of Etudiant objects
+        */
+       public function findByEtudiantByClasse($classe,$limit=5,$offset=0):Paginator
+       {
+          $query=$this->createQueryBuilder('e')
+               ->leftJoin("e.classe","c")
+               ->andWhere('e.classe = :classe')
+               ->setFirstResult($offset)
+               ->setParameter('classe', $classe)
+               ->orderBy('e.nomComplet', 'ASC')
+               ->setMaxResults($limit)
+               ->getQuery();
+               return new Paginator($query);
+   
+       }
 
     //    public function findOneBySomeField($value): ?Etudiant
     //    {
